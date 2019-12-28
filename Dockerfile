@@ -35,7 +35,7 @@ WORKDIR /root/mumble
 RUN qmake -recursive main.pro CONFIG+="no-client grpc"
 RUN make release
 
-FROM bitnami/minideb:latest
+FROM ubuntu:disco
 
 RUN groupadd -g 1001 -r murmur && useradd -u 1001 -r -g murmur murmur
 RUN install_packages \
