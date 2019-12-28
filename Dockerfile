@@ -3,7 +3,7 @@ FROM bitnami/minideb:latest
 # needed to install tzdata in disco
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y \
+RUN install_packages \
   build-essential \
   pkg-config \
   qt5-default \
@@ -26,8 +26,8 @@ RUN apt-get update && apt-get install -y \
   libbz2-dev \
   qtcreator
 
-ADD ADD https://github.com/mumble-voip/mumble/archive/master.tar.gz /root/mumble
-WORKDIR /root/mumble
+ADD https://github.com/mumble-voip/mumble/archive/master.tar.gz /mumble
+WORKDIR /mumble
 
 RUN qmake -recursive main.pro CONFIG+="no-client grpc"
 RUN make release
