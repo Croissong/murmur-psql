@@ -26,8 +26,12 @@ RUN install_packages \
   libbz2-dev \
   qtcreator
 
-ADD https://github.com/mumble-voip/mumble/archive/master.tar.gz /mumble
-WORKDIR /mumble
+RUN mkdir /root/mumble
+ADD https://github.com/mumble-voip/mumble/archive/master.tar.gz /root/mumble/
+RUN ls /root/mumble
+RUN tar xvfz /root/mumble/master.tar.gz -C /root/mumble/
+WORKDIR /root/mumble/mumble-master
+RUN ls
 
 RUN qmake -recursive main.pro CONFIG+="no-client grpc"
 RUN make release
