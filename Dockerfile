@@ -1,4 +1,4 @@
-FROM bitnami/minideb:latest
+FROM ubuntu:disco
 
 # needed to install tzdata in disco
 ENV DEBIAN_FRONTEND=noninteractive
