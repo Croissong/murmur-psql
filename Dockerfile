@@ -53,8 +53,8 @@ RUN install_packages \
   libqt5dbus5 \
   libqt5sql5-psql
 
-COPY --from=0 /root/mumble/release/murmurd /usr/bin/murmurd
-COPY --from=0 /root/mumble/scripts/murmur.ini /etc/murmur/murmur.ini
+COPY --from=0 /root/mumble/mumble-master/release/murmurd /usr/bin/murmurd
+COPY --from=0 /root/mumble/mumble-master/scripts/murmur.ini /etc/murmur/murmur.ini
 
 # Forward apporpriate ports
 EXPOSE 64738/tcp 64738/udp
