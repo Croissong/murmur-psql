@@ -1,5 +1,39 @@
 FROM bitnami/minideb:latest
 
+# needed to install tzdata in disco
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  pkg-config \
+  qt5-default \
+  libboost-dev \
+  libasound2-dev \
+  libssl-dev \
+  libspeechd-dev \
+  libzeroc-ice-dev \
+  libpulse-dev \
+  libcap-dev \
+  libprotobuf-dev \
+  protobuf-compiler \
+  protobuf-compiler-grpc \
+  libprotoc-dev \
+  libogg-dev \
+  libavahi-compat-libdnssd-dev \
+  libsndfile1-dev \
+  libgrpc++-dev \
+  libxi-dev \
+  libbz2-dev \
+  qtcreator
+
+ADD ADD https://github.com/mumble-voip/mumble/archive/master.tar.gz /root/mumble
+WORKDIR /root/mumble
+
+RUN qmake -recursive main.pro CONFIG+="no-client grpc"
+RUN make release
+
+FROM bitnami/minideb:latest
+
 RUN groupadd -g 1001 -r murmur && useradd -u 1001 -r -g murmur murmur
 RUN install_packages \
   libcap2 \
@@ -13,16 +47,10 @@ RUN install_packages \
   libqt5sql5 \
   libqt5xml5 \
   libqt5dbus5 \
-  libqt5sql5-psql \
-  bzip2
+  libqt5sql5-psql
 
-ENV version=1.3.0
-
-# Download statically compiled murmur and install it to /opt/murmur
-ADD https://github.com/mumble-voip/mumble/releases/download/${version}/murmur-static_x86-${version}.tar.bz2 /opt/
-RUN bzcat /opt/murmur-static_x86-${version}.tar.bz2 | tar -x -C /opt -f - && \
-    rm /opt/murmur-static_x86-${version}.tar.bz2 && \
-    mv /opt/murmur-static_x86-${version} /opt/murmur
+COPY --from=0 /root/mumble/release/murmurd /usr/bin/murmurd
+COPY --from=0 /root/mumble/scripts/murmur.ini /etc/murmur/murmur.ini
 
 # Forward apporpriate ports
 EXPOSE 64738/tcp 64738/udp
