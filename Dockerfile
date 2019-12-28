@@ -4,27 +4,12 @@ FROM ubuntu:disco
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
-  build-essential \
-  pkg-config \
-  qt5-default \
-  libboost-dev \
-  libasound2-dev \
-  libssl-dev \
-  libspeechd-dev \
-  libzeroc-ice-dev \
-  libpulse-dev \
-  libcap-dev \
-  libprotobuf-dev \
-  protobuf-compiler \
-  protobuf-compiler-grpc \
-  libprotoc-dev \
-  libogg-dev \
-  libavahi-compat-libdnssd-dev \
-  libsndfile1-dev \
-  libgrpc++-dev \
-  libxi-dev \
-  libbz2-dev \
-  qtcreator
+  build-essential pkg-config qt5-default qttools5-dev-tools qttranslations5-l10n \
+  libqt5svg5-dev libboost-dev libssl-dev libprotobuf-dev protobuf-compiler \
+  libcap-dev libxi-dev \
+  libasound2-dev libpulse-dev \
+  libogg-dev libsndfile1-dev libspeechd-dev \
+  libavahi-compat-libdnssd-dev libzeroc-ice-dev libg15daemon-client-dev
 
 RUN mkdir /root/mumble
 ADD https://github.com/mumble-voip/mumble/archive/master.tar.gz /root/mumble/
