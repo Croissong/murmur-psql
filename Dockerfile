@@ -3,7 +3,7 @@ FROM ubuntu:disco
 # needed to install tzdata in disco
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN install_packages \
+RUN apt-get update && apt-get install -y \
   build-essential \
   pkg-config \
   qt5-default \
