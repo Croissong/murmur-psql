@@ -38,7 +38,7 @@ RUN make release
 FROM ubuntu:disco
 
 RUN groupadd -g 1001 -r murmur && useradd -u 1001 -r -g murmur murmur
-RUN install_packages \
+RUN apt-get update && apt-get install -y \
   libcap2 \
   libzeroc-ice3.7 \
   libprotobuf17 \
@@ -50,7 +50,8 @@ RUN install_packages \
   libqt5sql5 \
   libqt5xml5 \
   libqt5dbus5 \
-  libqt5sql5-psql
+  libqt5sql5-psql \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY --from=0 /root/mumble/release/murmurd /usr/bin/murmurd
 COPY --from=0 /root/mumble/scripts/murmur.ini /etc/murmur/murmur.ini
