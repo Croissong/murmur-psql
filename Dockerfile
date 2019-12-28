@@ -55,11 +55,7 @@ RUN install_packages \
 COPY --from=0 /root/mumble/release/murmurd /usr/bin/murmurd
 COPY --from=0 /root/mumble/scripts/murmur.ini /etc/murmur/murmur.ini
 
-# Forward apporpriate ports
 EXPOSE 64738/tcp 64738/udp
 
 USER murmur
-
-# Run murmur
-ENTRYPOINT ["/opt/murmur/murmur.x86", "-fg", "-v"]
-CMD ["-ini", "/etc/murmur/murmur.ini"]
+CMD /usr/bin/murmurd -v -fg -ini /etc/murmur/murmur.ini
