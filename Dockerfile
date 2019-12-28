@@ -30,10 +30,8 @@ RUN mkdir /root/mumble
 
 ENV version=1.3.0
 ADD https://github.com/mumble-voip/mumble/archive/${version}.tar.gz /root/mumble/
-RUN ls /root/mumble
-RUN tar xvfz /root/mumble/master.tar.gz -C /root/mumble/
-WORKDIR /root/mumble/mumble-master
-RUN ls
+RUN tar xvfz /root/mumble/${version}.tar.gz -C /root/mumble/
+WORKDIR /root/mumble/mumble-${version}
 
 RUN qmake -recursive main.pro CONFIG+="no-client grpc"
 RUN make release
