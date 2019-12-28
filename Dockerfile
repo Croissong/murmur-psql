@@ -51,6 +51,7 @@ RUN apt-get update && apt-get install -y \
   libqt5xml5 \
   libqt5dbus5 \
   libqt5sql5-psql \
+  python2.7 \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=0 /root/mumble/release/murmurd /usr/bin/murmurd
